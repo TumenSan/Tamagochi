@@ -7,6 +7,15 @@ namespace Tamagochi
     {
         static void Main(string[] args)
         {
+            Dictionary<CommandType, string> CommandNames = new Dictionary<CommandType, string>()
+            {
+                { CommandType.Feed, "Кормить" },
+                { CommandType.Play, "Играть" },
+                { CommandType.Sleep, "Укачивать" },
+                { CommandType.Treatment, "Лечить" },
+                { CommandType.GameOver, "Выйти из игры" },
+            };
+
             string? PetName = "";
 
             while (string.IsNullOrEmpty(PetName))
@@ -32,29 +41,30 @@ namespace Tamagochi
             while (pet.isHealthy())
             {
                 Console.WriteLine("Выберите действие:");
-                Console.WriteLine("1. Покормить");
-                Console.WriteLine("2. Поиграть");
-                Console.WriteLine("3. Укачать");
-                Console.WriteLine("4. Лечить");
-                Console.WriteLine("5. Выйти из игры");
+                foreach(var item  in CommandNames)
+                {
+                    Console.WriteLine((int)item.Key + ". " + item.Value);
+                }
 
                 if (int.TryParse(Console.ReadLine(), out int choice))
                 {
-                    switch (choice)
+                    CommandType commandType = (CommandType)choice;
+
+                    switch (commandType)
                     {
-                        case 1:
+                        case CommandType.Feed:
                             pet.Feed();
                             break;
-                        case 2:
+                        case CommandType.Play:
                             pet.Play();
                             break;
-                        case 3:
+                        case CommandType.Sleep:
                             pet.Sleep();
                             break;
-                        case 4:
+                        case CommandType.Treatment:
                             pet.Treatment();
                             break;
-                        case 5:
+                        case CommandType.GameOver:
                             Console.WriteLine("Игра завершена.");
                             return;
                         default:
