@@ -9,6 +9,7 @@ namespace tamagochi
         public int Health { get; private set; }
         public int Hunger { get; private set; }
         public int Fatigue { get; private set; }
+        public int Happy {  get; private set; }
 
         public Pet(string name)
         {
@@ -16,6 +17,7 @@ namespace tamagochi
             Health = 10;
             Hunger = 10;
             Fatigue = 10;
+            Happy = 10;
         }
 
         public void FeedPet()
@@ -41,6 +43,11 @@ namespace tamagochi
             {
                 Fatigue -= 1;
             }
+
+            if (Happy < 10)
+            {
+                Happy += 1;
+            }
         }
 
         public void SleepPet()
@@ -58,9 +65,19 @@ namespace tamagochi
             }
         }
 
+        public void PetTreatment()
+        {
+            if (Health < 10)
+            {
+                Health += 1;
+            }
+
+            Happy -= 1;
+        }
+
         public void PrintStatus()
         {
-            Console.WriteLine($"Питомец {Name}: Здоровье - {Health}, Голод - {Hunger}, Усталость - {Fatigue}");
+            Console.WriteLine($"Питомец {Name}: Здоровье - {Health}, Голод - {Hunger}, Усталость - {Fatigue}, Счастье = {Happy}");
         }
     }
 
@@ -92,7 +109,8 @@ namespace tamagochi
                 Console.WriteLine("1. Покормить");
                 Console.WriteLine("2. Поиграть");
                 Console.WriteLine("3. Укачать");
-                Console.WriteLine("4. Выйти из игры");
+                Console.WriteLine("4. Лечить");
+                Console.WriteLine("5. Выйти из игры");
 
                 if (int.TryParse(Console.ReadLine(), out int choice))
                 {
@@ -108,6 +126,9 @@ namespace tamagochi
                             pet.SleepPet();
                             break;
                         case 4:
+                            pet.PetTreatment();
+                            break;
+                        case 5:
                             Console.WriteLine("Игра завершена.");
                             return;
                         default:
