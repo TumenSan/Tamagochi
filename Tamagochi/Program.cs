@@ -69,7 +69,21 @@ namespace tamagochi
     {
         static void Main(string[] args)
         {
-            Pet pet = new Pet("Peter");
+            string? PetName = "";
+
+            while (string.IsNullOrEmpty(PetName))
+            {
+                Console.WriteLine("Введите имя вашего питомца:");
+                PetName = Console.ReadLine();
+
+                if (string.IsNullOrEmpty(PetName))
+                {
+                    Console.WriteLine("Имя не может быть пустым. Попробуйте снова.");
+                }
+            }
+
+            Pet pet = new Pet(PetName);
+
             pet.PrintStatus();
 
             while (pet.Health > 0)
@@ -80,8 +94,7 @@ namespace tamagochi
                 Console.WriteLine("3. Укачать");
                 Console.WriteLine("4. Выйти из игры");
 
-                int choice;
-                if (int.TryParse(Console.ReadLine(), out choice))
+                if (int.TryParse(Console.ReadLine(), out int choice))
                 {
                     switch (choice)
                     {
@@ -110,7 +123,7 @@ namespace tamagochi
                 }
             }
 
-            Console.WriteLine("Питомец умер. Игра завершена.");
+            Console.WriteLine("Питомец заболел. Игра завершена.");
         }
     }
 }
