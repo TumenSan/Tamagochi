@@ -1,87 +1,8 @@
 ﻿using System;
 using System.Xml.Linq;
 
-namespace tamagochi
+namespace Tamagochi
 {
-    public class Pet
-    {
-        public string Name { get; private set; }
-        public int Health { get; private set; }
-        public int Hunger { get; private set; }
-        public int Fatigue { get; private set; }
-        public int Happy {  get; private set; }
-
-        public Pet(string name)
-        {
-            Name = name;
-            Health = 10;
-            Hunger = 10;
-            Fatigue = 10;
-            Happy = 10;
-        }
-
-        public void FeedPet()
-        {
-            if (Hunger == 10)
-            {
-                Health -= 1;
-            }
-            else
-            {
-                Hunger += 1;
-            }
-        }
-
-        public void PlayPet()
-        {
-            if (Fatigue == 0)
-            {
-                Health -= 1;
-                Hunger -= 1;
-            }
-            else
-            {
-                Fatigue -= 1;
-            }
-
-            if (Happy < 10)
-            {
-                Happy += 1;
-            }
-        }
-
-        public void SleepPet()
-        {
-            Fatigue = 10;
-
-            if (Hunger > 0)
-            {
-                Hunger -= 1;
-            }
-
-            if (Health != 10)
-            {
-                Health += 1;
-            }
-        }
-
-        public void PetTreatment()
-        {
-            if (Health < 10)
-            {
-                Health += 1;
-            }
-
-            Happy -= 1;
-        }
-
-        public void PrintStatus()
-        {
-            Console.WriteLine($"Питомец {Name}: Здоровье - {Health}, Голод - {Hunger}, Усталость - {Fatigue}, Счастье = {Happy}");
-        }
-    }
-
-
     class Program
     {
         static void Main(string[] args)
@@ -99,11 +20,16 @@ namespace tamagochi
                 }
             }
 
-            Pet pet = new Pet(PetName);
+            const int maxHealth = 10;
+            const int maxHunger = 10;
+            const int maxFatigue = 10;
+            const int maxHappy = 10;
 
-            pet.PrintStatus();
+            Pet pet = new Pet(PetName, maxHealth, maxHunger, maxFatigue, maxHappy);
 
-            while (pet.Health > 0)
+            Console.WriteLine($"Питомец {pet.Name}: Здоровье - {pet.Health}, Голод - {pet.Hunger}, Усталость - {pet.Fatigue}, Счастье = {pet.Happy}");
+
+            while (pet.isHealthy())
             {
                 Console.WriteLine("Выберите действие:");
                 Console.WriteLine("1. Покормить");
@@ -117,16 +43,16 @@ namespace tamagochi
                     switch (choice)
                     {
                         case 1:
-                            pet.FeedPet();
+                            pet.Feed();
                             break;
                         case 2:
-                            pet.PlayPet();
+                            pet.Play();
                             break;
                         case 3:
-                            pet.SleepPet();
+                            pet.Sleep();
                             break;
                         case 4:
-                            pet.PetTreatment();
+                            pet.Treatment();
                             break;
                         case 5:
                             Console.WriteLine("Игра завершена.");
@@ -136,7 +62,7 @@ namespace tamagochi
                             break;
                     }
 
-                    pet.PrintStatus();
+                    Console.WriteLine($"Питомец {pet.Name}: Здоровье - {pet.Health}, Голод - {pet.Hunger}, Усталость - {pet.Fatigue}, Счастье = {pet.Happy}");
                 }
                 else
                 {
@@ -145,6 +71,12 @@ namespace tamagochi
             }
 
             Console.WriteLine("Питомец заболел. Игра завершена.");
+        }
+
+
+        private void PrintStatus(Pet pet)
+        {
+            Console.WriteLine($"Питомец {pet.Name}: Здоровье - {pet.Health}, Голод - {pet.Hunger}, Усталость - {pet.Fatigue}, Счастье = {pet.Happy}");
         }
     }
 }
