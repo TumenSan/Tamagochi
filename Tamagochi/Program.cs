@@ -117,7 +117,11 @@ namespace Tamagochi
         // Вывод статуса питомца
         private static void PrintStatusPet(Pet pet)
         {
-            Console.WriteLine($"Питомец {pet.Name}: Здоровье - {pet.Health}, Голод - {pet.Hunger}, Усталость - {pet.Fatigue}, Счастье - {pet.Happy}");
+            Console.WriteLine($"\nПитомец {pet.Name}: \n" +
+                $"Здоровье - {pet.Health}\n" +
+                $"Голод - {pet.Hunger}\n" +
+                $"Усталость - {pet.Fatigue}\n" +
+                $"Счастье - {pet.Happy}\n");
         }
     }
 }
