@@ -28,7 +28,7 @@ namespace Tamagochi
 
                 if (string.IsNullOrEmpty(PetName))
                 {
-                    Console.WriteLine("Имя не может быть пустым. Попробуйте снова.\n" + "");
+                    Console.WriteLine("Имя не может быть пустым. Попробуйте снова.\n");
                 }
             }
 
