@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Xml.Linq;
 
 namespace Tamagochi
@@ -50,26 +51,13 @@ namespace Tamagochi
                 {
                     CommandType commandType = (CommandType)choice;
 
-                    switch (commandType)
+                    try
                     {
-                        case CommandType.Feed:
-                            pet.Feed();
-                            break;
-                        case CommandType.Play:
-                            pet.Play();
-                            break;
-                        case CommandType.Sleep:
-                            pet.Sleep();
-                            break;
-                        case CommandType.Treatment:
-                            pet.Treatment();
-                            break;
-                        case CommandType.GameOver:
-                            Console.WriteLine("Игра завершена.");
-                            return;
-                        default:
-                            Console.WriteLine("Неверный выбор. Попробуйте еще раз.");
-                            break;
+                        ExecCommand(pet, commandType);
+                    }
+                    catch (InvalidOperationException ex)
+                    {
+                        Console.WriteLine(ex.Message);
                     }
 
                     Console.WriteLine($"Питомец {pet.Name}: Здоровье - {pet.Health}, Голод - {pet.Hunger}, Усталость - {pet.Fatigue}, Счастье = {pet.Happy}");
@@ -84,6 +72,30 @@ namespace Tamagochi
         }
 
 
+        private static void ExecCommand(Pet pet, CommandType commandType)
+        {
+            switch (commandType)
+            {
+                case CommandType.Feed:
+                    pet.Feed();
+                    break;
+                case CommandType.Play:
+                    pet.Play();
+                    break;
+                case CommandType.Sleep:
+                    pet.Sleep();
+                    break;
+                case CommandType.Treatment:
+                    pet.Treatment();
+                    break;
+                case CommandType.GameOver:
+                    Console.WriteLine("Игра завершена.");
+                    System.Environment.Exit(0);
+                    return;
+                default:
+                    throw new InvalidOperationException("Неверная команда.");
+            }
+        }
         private void PrintStatus(Pet pet)
         {
             Console.WriteLine($"Питомец {pet.Name}: Здоровье - {pet.Health}, Голод - {pet.Hunger}, Усталость - {pet.Fatigue}, Счастье = {pet.Happy}");
