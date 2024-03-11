@@ -28,7 +28,8 @@ namespace Tamagochi
 
                 if (string.IsNullOrEmpty(PetName))
                 {
-                    Console.WriteLine("Имя не может быть пустым. Попробуйте снова.");
+                    Console.WriteLine("Имя не может быть пустым. Попробуйте снова.\n" +
+                        "");
                 }
             }
 
@@ -66,12 +67,12 @@ namespace Tamagochi
                         Console.WriteLine(ex.Message);
                     }
 
-                    // Выод статуса
+                    // Вывод статуса
                     PrintStatusPet(pet);
                 }
                 else
                 {
-                    Console.WriteLine("Неверный выбор. Попробуйте еще раз.");
+                    Console.WriteLine("\nНеверный выбор. Попробуйте еще раз.\n");
                 }
             }
 
@@ -118,10 +119,10 @@ namespace Tamagochi
         private static void PrintStatusPet(Pet pet)
         {
             Console.WriteLine($"\nПитомец {pet.Name}: \n" +
-                $"Здоровье - {pet.Health}\n" +
-                $"Голод - {pet.Hunger}\n" +
+                $"Здоровье  - {pet.Health}\n" +
+                $"Голод     - {pet.Hunger}\n" +
                 $"Усталость - {pet.Fatigue}\n" +
-                $"Счастье - {pet.Happy}\n");
+                $"Счастье   - {pet.Happy}\n");
         }
     }
 }
