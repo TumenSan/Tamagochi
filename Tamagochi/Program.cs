@@ -6,6 +6,7 @@ namespace Tamagochi
 {
     class Program
     {
+        // Словарь действий
         public static Dictionary<CommandType, string> CommandNames = new Dictionary<CommandType, string>()
         {
             { CommandType.Feed, "Кормить" },
@@ -19,6 +20,7 @@ namespace Tamagochi
         {
             string? PetName = "";
 
+            // Ввод пользователем имени питомца
             while (string.IsNullOrEmpty(PetName))
             {
                 Console.WriteLine("Введите имя вашего питомца:");
@@ -30,32 +32,41 @@ namespace Tamagochi
                 }
             }
 
+            // Максимальные значения статуса
             const int maxHealth = 10;
             const int maxHunger = 10;
             const int maxFatigue = 10;
             const int maxHappy = 10;
 
+            // Создание питомца
             Pet pet = new Pet(PetName, maxHealth, maxHunger, maxFatigue, maxHappy);
 
+            // Вывод статуса питомца
             PrintStatusPet(pet);
 
+            // Пока питомец здоровый, игра продолжается
             while (pet.isHealthy())
             {
+                // Вывод возможных действий
                 PrintCommands();
 
+                // Чтение команды
                 if (int.TryParse(Console.ReadLine(), out int choice))
                 {
                     CommandType commandType = (CommandType)choice;
 
                     try
                     {
+                        // Выполнение команды
                         ExecCommand(pet, commandType);
                     }
                     catch (InvalidOperationException ex)
                     {
+                        // Команда неверная
                         Console.WriteLine(ex.Message);
                     }
 
+                    // Выод статуса
                     PrintStatusPet(pet);
                 }
                 else
@@ -67,7 +78,7 @@ namespace Tamagochi
             Console.WriteLine("Питомец заболел. Игра завершена.");
         }
 
-
+        // Выполнение команд с питомцем
         private static void ExecCommand(Pet pet, CommandType commandType)
         {
             switch (commandType)
@@ -93,6 +104,7 @@ namespace Tamagochi
             }
         }
 
+        // Вывод возможных действий
         private static void PrintCommands()
         {
             Console.WriteLine("Выберите действие:");
@@ -102,6 +114,7 @@ namespace Tamagochi
             }
         }
 
+        // Вывод статуса питомца
         private static void PrintStatusPet(Pet pet)
         {
             Console.WriteLine($"Питомец {pet.Name}: Здоровье - {pet.Health}, Голод - {pet.Hunger}, Усталость - {pet.Fatigue}, Счастье - {pet.Happy}");
