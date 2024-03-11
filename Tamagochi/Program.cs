@@ -6,17 +6,17 @@ namespace Tamagochi
 {
     class Program
     {
+        public static Dictionary<CommandType, string> CommandNames = new Dictionary<CommandType, string>()
+        {
+            { CommandType.Feed, "Кормить" },
+            { CommandType.Play, "Играть" },
+            { CommandType.Sleep, "Укачивать" },
+            { CommandType.Treatment, "Лечить" },
+            { CommandType.GameOver, "Выйти из игры" },
+        };
+
         static void Main(string[] args)
         {
-            Dictionary<CommandType, string> CommandNames = new Dictionary<CommandType, string>()
-            {
-                { CommandType.Feed, "Кормить" },
-                { CommandType.Play, "Играть" },
-                { CommandType.Sleep, "Укачивать" },
-                { CommandType.Treatment, "Лечить" },
-                { CommandType.GameOver, "Выйти из игры" },
-            };
-
             string? PetName = "";
 
             while (string.IsNullOrEmpty(PetName))
@@ -37,15 +37,11 @@ namespace Tamagochi
 
             Pet pet = new Pet(PetName, maxHealth, maxHunger, maxFatigue, maxHappy);
 
-            Console.WriteLine($"Питомец {pet.Name}: Здоровье - {pet.Health}, Голод - {pet.Hunger}, Усталость - {pet.Fatigue}, Счастье = {pet.Happy}");
+            PrintStatusPet(pet);
 
             while (pet.isHealthy())
             {
-                Console.WriteLine("Выберите действие:");
-                foreach(var item  in CommandNames)
-                {
-                    Console.WriteLine((int)item.Key + ". " + item.Value);
-                }
+                PrintCommands();
 
                 if (int.TryParse(Console.ReadLine(), out int choice))
                 {
@@ -60,7 +56,7 @@ namespace Tamagochi
                         Console.WriteLine(ex.Message);
                     }
 
-                    Console.WriteLine($"Питомец {pet.Name}: Здоровье - {pet.Health}, Голод - {pet.Hunger}, Усталость - {pet.Fatigue}, Счастье = {pet.Happy}");
+                    PrintStatusPet(pet);
                 }
                 else
                 {
@@ -96,9 +92,19 @@ namespace Tamagochi
                     throw new InvalidOperationException("Неверная команда.");
             }
         }
-        private void PrintStatus(Pet pet)
+
+        private static void PrintCommands()
         {
-            Console.WriteLine($"Питомец {pet.Name}: Здоровье - {pet.Health}, Голод - {pet.Hunger}, Усталость - {pet.Fatigue}, Счастье = {pet.Happy}");
+            Console.WriteLine("Выберите действие:");
+            foreach (var item in CommandNames)
+            {
+                Console.WriteLine((int)item.Key + ". " + item.Value);
+            }
+        }
+
+        private static void PrintStatusPet(Pet pet)
+        {
+            Console.WriteLine($"Питомец {pet.Name}: Здоровье - {pet.Health}, Голод - {pet.Hunger}, Усталость - {pet.Fatigue}, Счастье - {pet.Happy}");
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Tamagochi
 {
+    // Возможные действия
     enum CommandType
     {
         Feed = 1,
