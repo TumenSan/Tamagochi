@@ -6,27 +6,29 @@ using System.Threading.Tasks;
 
 namespace Tamagochi
 {
+    // Класс питомец
     public class Pet
     {
-        public string Name { get; private set; }
-        
-        public int Health { get; private set; }
-        public int Hunger { get; private set; }
-        public int Fatigue { get; private set; }
-        public int Happy { get; private set; }
-       
+        public string Name { get; private set; }  // Имя питомца
+        public int Health { get; private set; }   // Здоровье
+        public int Hunger { get; private set; }   // Голод
+        public int Fatigue { get; private set; }  // Усталость
+        public int Happy { get; private set; }    // Счастье
+
+        // Соответствующие максимальные показатели по баллам
         private int MaxHealth { get; set; }
         private int MaxHunger { get; set; }
         private int MaxFatigue { get; set; }
         private int MaxHappy { get; set; }
 
+        // Создание нового питомца с указанным именем и макс и мин значениями для его атрибутов
         public Pet(string name, int maxHealth, int maxHunger, int maxFatigue, int maxHappy)
         {
             Name    = name;
-            Health  = maxHealth;  //->  0-больной max-здоровый
-            Hunger  = 0;          //<-  0-переел max-очень голодный
-            Fatigue = 0;          //<-  0-полон сил max-очень устал
-            Happy   = maxHappy;   //->  0-не счастливый max-счастливый
+            Health  = maxHealth;  //->  0-больной        max-здоровый
+            Hunger  = 0;          //<-  0-переел         max-очень голодный
+            Fatigue = 0;          //<-  0-полон сил      max-очень устал
+            Happy   = maxHappy;   //->  0-не счастливый  max-счастливый
 
             MaxHealth = maxHealth;
             MaxHunger = maxHunger;
@@ -34,6 +36,7 @@ namespace Tamagochi
             MaxHappy = maxHappy;
         }
 
+        // Кормление питомца снижает уровень его голода. Перекармливание нанесит вред здоровью
         public void Feed()
         {
             if (Hunger == 0)  // переел
@@ -42,6 +45,7 @@ namespace Tamagochi
                 Hunger -= 1;    
         }
 
+        // Игра с питомцем увеличивает его усталость, но увеличивает счастье
         public void Play()
         {
             if (Fatigue == MaxFatigue) // устал
@@ -56,6 +60,7 @@ namespace Tamagochi
                 Happy += 1;
         }
 
+        // Сон устраняет усталость питомца, но увеличивает чувство голода и здоровье
         public void Sleep()
         {
             Fatigue = 0;
@@ -71,6 +76,7 @@ namespace Tamagochi
             }
         }
 
+        // Лечение питомца улучшает его здоровье, но уменьшает радость
         public void Treatment()
         {
             if (Health < MaxHealth)
@@ -81,6 +87,7 @@ namespace Tamagochi
             Happy -= 1;
         }
 
+        // Если здоровье питомца на нуле, то он заблолел
         public bool isHealthy()
         {
             return Health != 0;
